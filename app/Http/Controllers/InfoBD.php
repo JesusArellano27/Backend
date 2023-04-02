@@ -47,7 +47,7 @@ class InfoBD extends Controller
 
 
         $idsala = DB::table('salas')
-        ->max('salas.idsala');
+        ->max('salas.idsala');      //Integración en código para no utilizar campo autoincrement desde la base de datos
         if($idsala==null){
             $idsala=0;
         }
@@ -69,6 +69,17 @@ class InfoBD extends Controller
         ->get();
 
         return json_encode($ListaSalas);        
+    }
+
+    public function ModificarSalas(Request $request)       //Api que modifica la información de una sala
+    {
+        $vidsala= $request->input('idsala');
+        $vdescripcion= $request->input('descripcion');  //Datos recibidos desde el front
+        $vcapacidad= $request->input('capacidad');
+
+            $actualizar = DB::table('salas')
+            ->where('salas.idsala','=',$vidsala)                      //Sentencia SQL adaptada a eloquent para actualizar los datos de una sala
+            ->update(['salas.descripcion' => $vdescripcion,'salas.capacidad'=>$vcapacidad]);
     }
 
 }

@@ -25,3 +25,5 @@ Route::get('login', [InfoBD::class, 'login']);
 Route::post('guardarnuevasala', [InfoBD::class, 'GuardarNuevaSala']);
 
 Route::get('versalas', [InfoBD::class, 'VerSalas']);
+
+Route::post('modificarsalas', [InfoBD::class, 'ModificarSalas']);
