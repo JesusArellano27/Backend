@@ -82,4 +82,13 @@ class InfoBD extends Controller
             ->update(['salas.descripcion' => $vdescripcion,'salas.capacidad'=>$vcapacidad]);
     }
 
+    public function EliminarSalas(Request $request)  //Api utilizada para eliminar salas
+    {
+        $vidsala= $request->input('idsala');  //id del indicador recibido desde el front
+
+            $Eliminar = DB::table('salas')
+            ->where('idsala','=',$vidsala)    //Sentencia SQL adaptada a eloquent para eliminar la sala seleccionada
+            ->delete();
+    }
+
 }
