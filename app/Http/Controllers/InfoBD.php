@@ -8,5 +8,35 @@ use Illuminate\Http\Request;
 
 class InfoBD extends Controller
 {
-    
+    public function login(Request $request)
+    {
+        $respuesta = []; //Vector que almacena el rol del usuario, la ruta de acceso al front y el nombre de usuario
+        $UserName= $request->input('name');
+        $UserPassword= $request->input('password');
+
+        $login = DB::table('Usuarios')
+        ->select('Usuarios.rol','Usuarios.nombre','usuarios.vpassword')
+        ->where('Usuarios.correo', '=', $UserName) 
+        ->where('Usuarios.vpassword', '=', $UserPassword)
+        ->get();
+
+            if(!$login->isEmpty()){  //Se ejecuta en caso de que la contraseña y usuario coincidan en la base de datos
+                if(($login->first()->vpassword==$UserPassword) && $login!=null){
+                    $respuesta[0]= $login->first()->rol;
+                    $respuesta[1]="home";
+                    $respuesta[2]= $login->first()->nombre;  //Llenado de vector respuesta
+
+                    return response()->json($respuesta); //Se envia la información al frontend
+
+                }
+            }else{ //En caso de que no coincida los datos
+                    $respuesta[0]= "no encontrado";
+                    $respuesta[1]="login";
+                    $respuesta[2]= "no encontrado"; //Llenado de vector respuesta
+
+                    return response()->json($respuesta);
+            } 
+            
+        
+    }
 }
