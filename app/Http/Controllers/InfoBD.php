@@ -57,7 +57,18 @@ class InfoBD extends Controller
             ['salas.idsala'=>$idsala+1,'salas.descripcion'=>$vdescripcion,
             'salas.capacidad'=>$vcapacidad,'salas.estado'=> 0]
         ]);
+    }
 
+    public function VerSalas(Request $request)
+    {
+
+        $ListaSalas = DB::table('salas')
+        ->select('salas.idsala','salas.descripcion',
+                'salas.capacidad')                   //Sentencia SQL adaptada a eloquent para mostrar la lista de todas las salas
+        ->orderBy('salas.idsala','ASC')
+        ->get();
+
+        return json_encode($ListaSalas);        
     }
 
 }
