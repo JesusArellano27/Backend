@@ -39,4 +39,25 @@ class InfoBD extends Controller
             
         
     }
+
+    public function GuardarNuevaSala(Request $request) //Actualizado y testado
+    {
+        $vdescripcion = $request->input('descripcion');
+        $vcapacidad = $request->input('capacidad');
+
+
+        $idsala = DB::table('salas')
+        ->max('salas.idsala');
+        if($idsala==null){
+            $idsala=0;
+        }
+
+        $nuevaSala = DB::table('salas')
+        ->insert([
+            ['salas.idsala'=>$idsala+1,'salas.descripcion'=>$vdescripcion,
+            'salas.capacidad'=>$vcapacidad,'salas.estado'=> 0]
+        ]);
+
+    }
+
 }

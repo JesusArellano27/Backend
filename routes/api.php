@@ -22,3 +22,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('login', [InfoBD::class, 'login']);
 
+Route::post('guardarnuevasala', [InfoBD::class, 'GuardarNuevaSala']);
