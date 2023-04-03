@@ -37,3 +37,5 @@ Route::get('verdisponibilidad', [InfoBD::class, 'VerDisponibilidad']);
 Route::post('guardarreservacion', [InfoBD::class, 'GuardarReservacion']);
 
 Route::get('versalasreservadas', [InfoBD::class, 'VerSalasReservadas']);
+
+Route::post('liberarsala', [InfoBD::class, 'LiberarSala']);

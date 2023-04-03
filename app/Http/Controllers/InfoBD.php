@@ -182,4 +182,13 @@ class InfoBD extends Controller
         return json_encode($ListaSalas);        
     }
 
+    public function LiberarSala(Request $request)       //Api que modifica la información de una sala
+    {
+        $vidreservacion= $request->input('idreservacion');
+
+            $actualizar = DB::table('reservaciones')
+            ->where('reservaciones.idreservacion','=',$vidreservacion)                      //Sentencia SQL adaptada a eloquent para actualizar los datos de una sala
+            ->update(['reservaciones.estado' => 0]);    //El 0 en el campo estado indica que se ha concluido la reservación
+    }
+
 }
