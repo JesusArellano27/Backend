@@ -82,6 +82,23 @@ class InfoBD extends Controller
             ->update(['salas.descripcion' => $vdescripcion,'salas.capacidad'=>$vcapacidad]);
     }
 
+    public function VerSalaEspecifica(Request $request)
+    {
+        $vidsala= $request->input('idsala');
+        $respuesta = [];
+
+        $ListaSalas = DB::table('salas')
+        ->select('salas.idsala','salas.descripcion',
+                'salas.capacidad')                   //Sentencia SQL adaptada a eloquent para mostrar la lista de todas las salas
+        ->where('salas.idsala','=',$vidsala)
+        ->get();
+        
+        $respuesta[0]= $ListaSalas->first()->descripcion;
+        $respuesta[1]= $ListaSalas->first()->capacidad;
+
+        return json_encode($respuesta);        
+    }
+
     public function EliminarSalas(Request $request)  //Api utilizada para eliminar salas
     {
         $vidsala= $request->input('idsala');  //id del indicador recibido desde el front
