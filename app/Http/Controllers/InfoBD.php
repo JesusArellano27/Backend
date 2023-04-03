@@ -167,4 +167,19 @@ class InfoBD extends Controller
         ]);
     }
 
+    public function VerSalasReservadas(Request $request)
+    {
+
+        $ListaSalas = DB::table('reservaciones')
+        ->select('reservaciones.idsala','reservaciones.estado',
+                'reservaciones.diareservacion','reservaciones.horainicio', 
+                'reservaciones.minutoinicio', 'reservaciones.horafin', 'reservaciones.minutofin',
+                'reservaciones.npersonas','reservaciones.cliente')                   //Sentencia SQL adaptada a eloquent para mostrar la lista de todas las salas
+        ->orderBy('reservaciones.idsala','ASC')
+        ->where('reservaciones.estado',"=",1)
+        ->get();
+
+        return json_encode($ListaSalas);        
+    }
+
 }
