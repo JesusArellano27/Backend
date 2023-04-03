@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\login;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class InfoBD extends Controller
 {
@@ -230,6 +231,23 @@ class InfoBD extends Controller
         $respuesta[5]= $infoSala->first()->npersonas;
         
         return json_encode($respuesta);    
+    }
+
+    public function LiberarSalaAutomatico(Request $request)       //Api que modifica la información de una sala
+    {
+            $fecha_actual = Carbon::now();  //Obtención de hora del sistema
+            $time = strtotime($fecha_actual);
+            $fecha = date("Y-m-d", $time);
+            $Hora = date("H", $time);
+            $minuto = date("i", $time);
+
+            $actualizar = DB::table('reservaciones')
+            ->where('reservaciones.diareservacion','=',$fecha)                      //Sentencia SQL adaptada a eloquent para actualizar el estado de reservación
+                //El 0 en el campo estado indica que se ha concluido la reservación
+            ->where('reservaciones.horafin','<=', $Hora)
+            ->where('reservaciones.minutofin','<=', $minuto)
+            ->update(['reservaciones.estado' => 0]);  
+
     }
 
 }
