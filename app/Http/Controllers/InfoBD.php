@@ -55,7 +55,7 @@ class InfoBD extends Controller
         $nuevaSala = DB::table('salas')
         ->insert([
             ['salas.idsala'=>$idsala+1,'salas.descripcion'=>$vdescripcion,
-            'salas.capacidad'=>$vcapacidad,'salas.estado'=> 0]
+            'salas.capacidad'=>$vcapacidad]
         ]);
     }
 
