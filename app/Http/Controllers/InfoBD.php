@@ -139,4 +139,32 @@ class InfoBD extends Controller
         return json_encode($respuesta);        
     }
 
+    public function GuardarReservacion(Request $request) //Actualizado y testado
+    {
+        $vidsala= $request->input('idsala');  //id de la sala recibido desde el front
+        $vifechareservacion= $request->input('fechareservacion');
+        $vhorainicio= $request->input('horainicio');
+        $vminutoinicio= $request->input('minutoinicio');
+        $vhorafin= $request->input('horafin');
+        $vminutofin= $request->input('minutofin');
+        $vnpersonas = $request->input('npersonas');
+        $vcliente   = $request->input('cliente');
+
+
+        $idreservacion = DB::table('reservaciones')
+        ->max('reservaciones.idreservacion');      //Integración en código para no utilizar campo autoincrement desde la base de datos
+        if($idreservacion==null){
+            $idreservacion=0;
+        }
+
+        $nuevaReservacion = DB::table('reservaciones')
+        ->insert([
+            ['reservaciones.idreservacion'=>$idreservacion+1,'reservaciones.idsala'=>$vidsala,
+            'reservaciones.diareservacion'=>$vifechareservacion,'reservaciones.horainicio'=>$vhorainicio,
+            'reservaciones.minutoinicio'=>$vminutoinicio,'reservaciones.horafin'=>$vhorafin,
+            'reservaciones.minutofin'=>$vminutofin,'reservaciones.npersonas'=>$vnpersonas,
+            'reservaciones.cliente'=>$vcliente,'reservaciones.estado'=>1]
+        ]);
+    }
+
 }
