@@ -191,4 +191,21 @@ class InfoBD extends Controller
             ->update(['reservaciones.estado' => 0]);    //El 0 en el campo estado indica que se ha concluido la reservación
     }
 
+    public function VerSalasReservadasUsuario(Request $request)
+    {
+        $vusuario= $request->input('usuario');
+
+        $ListaSalas = DB::table('reservaciones')
+        ->select('reservaciones.idsala','reservaciones.estado',
+                'reservaciones.diareservacion','reservaciones.horainicio', 
+                'reservaciones.minutoinicio', 'reservaciones.horafin', 'reservaciones.minutofin',
+                'reservaciones.npersonas','reservaciones.cliente')                   //Sentencia SQL adaptada a eloquent para mostrar la lista de todas las salas con reservacion activa
+        ->orderBy('reservaciones.idsala','ASC')
+        ->where('reservaciones.estado',"=",1)
+        ->where('reservaciones.cliente','=',$vusuario)
+        ->get();
+
+        return json_encode($ListaSalas);        
+    }
+
 }

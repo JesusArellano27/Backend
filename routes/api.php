@@ -39,3 +39,5 @@ Route::post('guardarreservacion', [InfoBD::class, 'GuardarReservacion']);
 Route::get('versalasreservadas', [InfoBD::class, 'VerSalasReservadas']);
 
 Route::post('liberarsala', [InfoBD::class, 'LiberarSala']);
+
+Route::get('versalasreservadasusuario', [InfoBD::class, 'VerSalasReservadasUsuario']);
