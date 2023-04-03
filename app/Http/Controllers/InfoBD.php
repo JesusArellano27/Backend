@@ -229,6 +229,7 @@ class InfoBD extends Controller
         $respuesta[4]= $infoSala->first()->minutofin;
         $respuesta[5]= $infoSala->first()->npersonas;
         
+        return json_encode($respuesta);    
     }
 
 }
