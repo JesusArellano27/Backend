@@ -174,7 +174,7 @@ class InfoBD extends Controller
         ->select('reservaciones.idsala','reservaciones.estado',
                 'reservaciones.diareservacion','reservaciones.horainicio', 
                 'reservaciones.minutoinicio', 'reservaciones.horafin', 'reservaciones.minutofin',
-                'reservaciones.npersonas','reservaciones.cliente')                   //Sentencia SQL adaptada a eloquent para mostrar la lista de todas las salas
+                'reservaciones.npersonas','reservaciones.cliente')                   //Sentencia SQL adaptada a eloquent para mostrar la lista de todas las salas con reservacion activa
         ->orderBy('reservaciones.idsala','ASC')
         ->where('reservaciones.estado',"=",1)
         ->get();
