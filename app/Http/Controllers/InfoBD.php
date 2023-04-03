@@ -101,11 +101,42 @@ class InfoBD extends Controller
 
     public function EliminarSalas(Request $request)  //Api utilizada para eliminar salas
     {
-        $vidsala= $request->input('idsala');  //id del indicador recibido desde el front
+        $vidsala= $request->input('idsala');  //id de la sala recibido desde el front
 
             $Eliminar = DB::table('salas')
             ->where('idsala','=',$vidsala)    //Sentencia SQL adaptada a eloquent para eliminar la sala seleccionada
             ->delete();
+    }
+
+    public function VerDisponibilidad(Request $request)
+    {
+
+        $vidsala= $request->input('idsala');  //id de la sala recibido desde el front
+        $vifechareservacion= $request->input('fechareservacion');
+        $vhorainicio= $request->input('horainicio');
+        $vminutoinicio= $request->input('minutoinicio');
+        $vhorafin= $request->input('horafin');
+        $vminutofin= $request->input('minutofin');
+        $respuesta = []; 
+
+        $Disponibilidad = DB::table('reservaciones')
+        ->select('reservaciones.idsala')            //Sentencia SQL adaptada a eloquent para mostrar la lista de todas las salas
+        ->where('idsala','=',$vidsala)
+        ->where('estado','=',1)
+        ->where('diareservacion',"=",$vifechareservacion)
+        ->where('horainicio',"=",$vhorainicio)
+        ->where('minutoinicio',"<=",$vminutoinicio)
+        ->where('horainicio',"<=",$vhorafin)
+        ->where('minutofin','>=',$vminutofin)
+        ->get();
+
+        if($Disponibilidad->isEmpty()){
+            $respuesta[0]="Disponible";
+        }else{
+            $respuesta[0]="Ocupada";
+        }
+        
+        return json_encode($respuesta);        
     }
 
 }

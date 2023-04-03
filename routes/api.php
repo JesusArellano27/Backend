@@ -31,3 +31,5 @@ Route::post('modificarsalas', [InfoBD::class, 'ModificarSalas']);
 Route::post('eliminarsalas', [InfoBD::class, 'EliminarSalas']);
 
 Route::get('versalaespecifica', [InfoBD::class, 'VerSalaEspecifica']);
+
+Route::get('verdisponibilidad', [InfoBD::class, 'VerDisponibilidad']);
