@@ -208,4 +208,27 @@ class InfoBD extends Controller
         return json_encode($ListaSalas);        
     }
 
+    public function verInformacionSalaReservada(Request $request)
+    {
+        $vidreservacion= $request->input('idreservacion');
+        $respuesta = [];
+
+        $infoSala = DB::table('reservaciones')
+        ->select('reservaciones.idsala','reservaciones.estado',
+                'reservaciones.diareservacion','reservaciones.horainicio', 
+                'reservaciones.minutoinicio', 'reservaciones.horafin', 'reservaciones.minutofin',
+                'reservaciones.npersonas')                   //Sentencia SQL adaptada a eloquent para mostrar la información de una reservación en especifica
+        ->orderBy('reservaciones.idsala','ASC')
+        ->where('reservaciones.idreservacion','=',$vidreservacion)
+        ->get();
+
+        $respuesta[0]= $infoSala->first()->diareservacion;
+        $respuesta[1]= $infoSala->first()->horainicio;
+        $respuesta[2]= $infoSala->first()->minutoinicio;
+        $respuesta[3]= $infoSala->first()->horafin;
+        $respuesta[4]= $infoSala->first()->minutofin;
+        $respuesta[5]= $infoSala->first()->npersonas;
+        
+    }
+
 }
